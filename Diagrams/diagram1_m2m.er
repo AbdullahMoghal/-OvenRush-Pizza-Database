@@ -1,0 +1,14 @@
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    EMPLOYEE ||--o{ ORDER : processes
+    ORDER ||--o{ PRODUCT : includes
+    STORE ||--o{ EMPLOYEE : employs
+    STORE ||--o{ ORDER : receives
+    COUPON ||--o{ ORDER : applies_to
+
+    CUSTOMER
+    EMPLOYEE
+    ORDER
+    PRODUCT
+    STORE
+    COUPON
