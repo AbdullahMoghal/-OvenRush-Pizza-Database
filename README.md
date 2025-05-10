@@ -26,15 +26,20 @@ Developed for the course INSY 3304-004, this project demonstrates a complete dat
 
 ## Key Files
 
-| File | Description |
-|------|-------------|
-| `create_tables.sql` | All `CREATE TABLE` statements with constraints |
-| `insert_data.sql` | Sample data insertion for testing and validation |
-| `queries.sql` | SQL solutions for all Part 2 report questions |
-| `data_dictionary.xlsx` | Attributes, data types, keys, and FK references |
-| `er_diagram.png` | Conceptual and physical ER diagram, including bridge entity |
-| `screenshots/` | Output screenshots of query results and table structures |
+| File/Folder | Description |
+|-------------|-------------|
 | `README.md` | This documentation file |
+| `sql/` | Folder containing all SQL scripts: create, insert, queries, and drop |
+| `docs/` | Contains data dictionary, ER diagrams, business rules, and cover sheet |
+| `screenshots/` | Screenshots of query outputs for Part 2 Questions 4 and 5 |
+| `report/` | Final compiled PDF report for submission |
+| `create_tables.sql` | Contains all `CREATE TABLE` statements with constraints |
+| `insert_data.sql` | Sample data insertion for testing and validation |
+| `queries.sql` | SQL solutions for all report-based questions |
+| `data_dictionary.xlsx` | Attributes, data types, keys, and FK references |
+| `er_diagram.pdf` | Full conceptual ER diagram including bridge entity |
+| `business_rules.txt` | Written summary of database rules and logic |
+| `cover_sheet.pdf` | Report cover sheet with course and contact info |
 
 ## Sample Queries Included
 
