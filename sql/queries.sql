@@ -1,64 +1,74 @@
--- QUERY 1: List all customer names, addresses, phone numbers, and their order IDs
+-- Query 1: List customers and their order information
 SELECT 
-    CONCAT(c_Fname, " ", c_Lname) AS name, 
-    c_address AS address, 
-    c_phone AS phone_number, 
-    order_id
-FROM customer c
-JOIN `ORDER` o ON c.customer_id = o.customer_id;
+    CONCAT(c.C_FNAME, ' ', c.C_LNAME) AS name, 
+    c.C_ADDRESS AS address, 
+    c.C_PHONE AS phone_number, 
+    o.ORDER_ID
+FROM CUSTOMER c
+JOIN `ORDER` o ON c.CUSTOMER_ID = o.CUSTOMER_ID;
 
--- QUERY 2: List all product names, quantities ordered, descriptions, prices, and order IDs
+
+-- Query 2: Show products included in orders with quantity and details
 SELECT 
-    product_name, 
-    order_quantity, 
-    product_description, 
-    Product_Price, 
-    order_id
-FROM order_item oi
-JOIN product p ON oi.product_id = p.product_id;
+    p.PRODUCT_NAME, 
+    oi.ORDER_QUANTITY, 
+    p.PRODUCT_DESCRIPTION, 
+    p.PRODUCT_PRICE, 
+    oi.ORDER_ID
+FROM ORDER_ITEM oi
+JOIN PRODUCT p ON oi.PRODUCT_ID = p.PRODUCT_ID;
 
--- QUERY 3: Show employee names, store addresses, store names, and processing dates for orders
+
+-- Query 3: List employee, store, and order processing info
 SELECT  
-    CONCAT(e.e_fname, ' ', e.e_lname) AS Employee_Name, 
-    s.store_location AS address, 
-    s.store_name AS store_name, 
-    o.order_date AS Processing_Date
+    CONCAT(e.E_FNAME, ' ', e.E_LNAME) AS Employee_Name, 
+    s.STORE_LOCATION AS address, 
+    s.STORE_NAME AS store_name, 
+    o.ORDER_DATE AS Processing_Date
 FROM `ORDER` o
-JOIN store s ON o.store_id = s.store_id
-JOIN employee e ON s.store_id = e.store_id;
+JOIN STORE s ON o.STORE_ID = s.STORE_ID
+JOIN EMPLOYEE e ON s.STORE_ID = e.STORE_ID;
 
--- QUERY 4: Monthly order summary with coupon stats for 2024
+
+-- Query 4: Monthly order stats with and without discounts
 SELECT 
-    DATE_FORMAT(o.order_date, '%Y-%m') AS Month, 
+    DATE_FORMAT(o.ORDER_DATE, '%Y-%m') AS Month, 
     COUNT(*) AS Total_Orders, 
-    SUM(CASE WHEN o.coupon_id IS NOT NULL THEN 1 ELSE 0 END) AS Discounted_Orders, 
-    SUM(CASE WHEN o.coupon_id IS NOT NULL THEN oi.order_total ELSE 0 END) AS Discounted_Total_Price
+    SUM(CASE WHEN o.COUPON_ID IS NOT NULL THEN 1 ELSE 0 END) AS Discounted_Orders, 
+    SUM(CASE WHEN o.COUPON_ID IS NOT NULL THEN oi.ORDER_TOTAL ELSE 0 END) AS Discounted_Total_Price
 FROM `ORDER` o
-JOIN order_item oi ON o.order_id = oi.order_id
-WHERE YEAR(o.order_date) = 2024
-GROUP BY DATE_FORMAT(o.order_date, '%Y-%m')
+JOIN ORDER_ITEM oi ON o.ORDER_ID = oi.ORDER_ID
+WHERE YEAR(o.ORDER_DATE) = 2024
+GROUP BY DATE_FORMAT(o.ORDER_DATE, '%Y-%m')
 ORDER BY Month;
 
--- QUERY 5: Detailed order info with discounts, grouped by store, employee, customer, and date
+
+-- Query 5: Orders with more than 5 items in 2024
 SELECT  
-    s.store_name AS Store_Name, 
-    CONCAT(e.e_fname, ' ', e.e_lname) AS Employee_Name, 
-    CONCAT(c.c_fname, ' ', c.c_lname) AS Customer_Name, 
-    o.order_date AS Transaction_Date, 
-    o.order_id AS Order_Number, 
+    s.STORE_NAME AS Store_Name, 
+    CONCAT(e.E_FNAME, ' ', e.E_LNAME) AS Employee_Name, 
+    CONCAT(c.C_FNAME, ' ', c.C_LNAME) AS Customer_Name, 
+    o.ORDER_DATE AS Transaction_Date, 
+    o.ORDER_ID AS Order_Number, 
     CASE 
-        WHEN o.coupon_id IS NOT NULL THEN 'Discount Applied'  
-        ELSE 'No Discount'  
+        WHEN o.COUPON_ID IS NOT NULL THEN 'Discount Applied' 
+        ELSE 'No Discount' 
     END AS Discount, 
-    SUM(oi.order_total) AS Total_Amount
+    SUM(oi.ORDER_TOTAL) AS Total_Amount
 FROM `ORDER` o
-JOIN order_item oi ON o.order_id = oi.order_id
-JOIN store s ON o.store_id = s.store_id
-JOIN employee e ON o.store_id = e.store_id
-JOIN customer c ON o.customer_id = c.customer_id
-WHERE EXTRACT(YEAR FROM o.order_date) = 2024
+JOIN ORDER_ITEM oi ON o.ORDER_ID = oi.ORDER_ID
+JOIN STORE s ON o.STORE_ID = s.STORE_ID
+JOIN EMPLOYEE e ON o.STORE_ID = e.STORE_ID
+JOIN CUSTOMER c ON o.CUSTOMER_ID = c.CUSTOMER_ID
+WHERE EXTRACT(YEAR FROM o.ORDER_DATE) = 2024
 GROUP BY 
-    s.store_name, e.e_fname, e.e_lname, 
-    c.c_fname, c.c_lname, o.order_date, o.order_id, o.coupon_id
-HAVING COUNT(oi.orderitem_id) > 5
-ORDER BY o.order_date;
+    s.STORE_NAME, 
+    e.E_FNAME, 
+    e.E_LNAME, 
+    c.C_FNAME, 
+    c.C_LNAME, 
+    o.ORDER_DATE, 
+    o.ORDER_ID, 
+    o.COUPON_ID
+HAVING COUNT(oi.ORDERITEM_ID) > 5
+ORDER BY o.ORDER_DATE;
