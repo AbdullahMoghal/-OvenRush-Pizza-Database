@@ -34,23 +34,28 @@ Developed for the course INSY 3304-004, this project demonstrates a complete dat
 | `data_dictionary.xlsx` | Attributes, data types, keys, and FK references |
 | `er_diagram.png` | Conceptual and physical ER diagram, including bridge entity |
 | `screenshots/` | Output screenshots of query results and table structures |
+| `BusinessRules.md` | Basic rules defining how customers, employees, orders, and products interact in the system |
 | `README.md` | This documentation file |
 
-## Sample Queries Included
+## Project Structure
 
-- Retrieve customer orders with contact information
-- Display product details per order with quantity and price
-- Track employee-store processing activity
-- Compare monthly coupon usage vs. total orders
-- Identify high-volume orders (more than 5 line items per month)
+- **Diagrams/**
+  - diagram1_m2m.er
+  - diagram1_m2m.png
+  - diagram2_orderline.er
+  - diagram2_orderline.png
 
-## Business Rules
+- **Schema/**
+  - data_dictionary_table.png
+  - relational_schema.md
 
-- A customer can place many orders, but each order is associated with exactly one customer.
-- An order may contain multiple products, and a product may appear in multiple orders (many-to-many relationship managed via ORDER_ITEM).
-- Employees are assigned to exactly one store, but stores can have multiple employees.
-- A coupon is optional on an order, but if present, it must exist in the COUPON table.
-- Each order must belong to a specific store.
+- **sql/**
+  - create_tables.sql
+  - insert_data.sql
+  - queries.sql
+
+- **README.md**
+- **BusinessRules.md**
 
 ## Team Members
 
